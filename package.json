@@ -2,7 +2,7 @@
   "name": "amicis",
   "version": "1.0.0",
   "description": "A simple slack bot that facilitates the making of new friends.",
-  "main": "index.js",
+  "main": "app.js",
   "dependencies": {
     "@slack/bolt": "^2.1.1",
     "@slack/events-api": "^2.3.3",
@@ -12,7 +12,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node index.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
