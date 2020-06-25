@@ -1,0 +1,27 @@
+{
+  "name": "amicis",
+  "version": "1.0.0",
+  "description": "A simple slack bot that facilitates the making of new friends.",
+  "main": "index.js",
+  "dependencies": {
+    "@slack/bolt": "^2.1.1",
+    "@slack/events-api": "^2.3.3",
+    "@slack/interactive-messages": "^1.6.0",
+    "@slack/web-api": "^5.10.0",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SiAshbery/amicis.git"
+  },
+  "author": "Simon 'Ash' Ashbery",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SiAshbery/amicis/issues"
+  },
+  "homepage": "https://github.com/SiAshbery/amicis#readme"
+}
