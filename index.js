@@ -21,9 +21,9 @@ let currentPost;
 let conversationsStore = {};
 let assignedChannelId;
 
-const signupTime = "0 0 10 ? * 5 *";
-const reminderTime = "0 0 9 ? * 1 *";
-const pairingTime = "0 0 11 ? * 1 *";
+const signupTime = "0 0 10 * * 5 *";
+const reminderTime = "0 0 9 * * 1 *";
+const pairingTime = "0 0 11 * * 1 *";
 
 const reminderText =
   "*Reminder:*\n Chat in what ever way you like and feel comfortable with, Send messages over slack, do a voice or video call\nAs time goes on repeat pairings are bound to happen, This is a feature not a bug! A repeat pairing is a chance to deepen a connection and learn more about each other :smile:\nIf you missed out on this weeks pairings it’s all good, just shout out in the channel and see if anyone fancies chatting.\nPlease also do shout out if you need any help with anything.\nHave a great week!";
