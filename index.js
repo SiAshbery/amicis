@@ -158,15 +158,17 @@ scheduleSignupMessage = (message, time) => {
     // Store the posted message's timestamp for furture reference.
     await setCurrentMessage();
     // Add the signup emoji to the message as a pilot for others
-    try {
-      await web.reactions.add({
-        token: process.env.SLACK_TOKEN,
-        channel: assignedChannelId,
-        name: assignedEmoji,
-        timestamp: currentPost,
-      });
-    } catch (error) {
-      console.log(error);
+    if (currentPost) {
+      try {
+        await web.reactions.add({
+          token: process.env.SLACK_TOKEN,
+          channel: assignedChannelId,
+          name: assignedEmoji,
+          timestamp: currentPost,
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
   });
 };
