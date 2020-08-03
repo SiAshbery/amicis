@@ -251,9 +251,9 @@ const port = process.env.PORT || 3000;
 const hostname = process.env.HOSTNAME || "0.0.0.0";
 
 (async () => {
-  app.use(serveStatic(path.join(__dirname, "dist")));
+  expressApp.use(serveStatic(path.join(__dirname, "dist")));
 
-  app.listen(port);
+  expressApp.listen(port);
   console.log("server started " + port);
 
   await fetchAssignedChannelID();
