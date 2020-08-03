@@ -10,11 +10,10 @@ const app = new App({
 });
 
 const web = new WebClient(process.env.SLACK_TOKEN);
-const slackEvents = createEventAdapter(process.env.SLACK_SIGNING_SECRET);
 
 const currentTime = new Date().toTimeString();
 // Change this to a configurable var
-const assignedChannel = "general";
+const assignedChannel = "make-new-friends";
 const assignedEmoji = "raised_hands";
 
 let currentPost;
@@ -243,13 +242,9 @@ const fillRange = (start, end) => {
     .map((item, index) => start + index);
 };
 
-const port = process.env.PORT || 3000;
-
 (async () => {
-  const server = await slackEvents.start(port);
-
-  console.log(`Listening for events on ${port}`);
   await fetchAssignedChannelID();
+  console.log("Aaaaaaaaand we're live");
 
   scheduleSignupMessage(
     `It's that time again <!channel>, If you want to take part in the next set of pairings, please hit the :${assignedEmoji}: button!`,

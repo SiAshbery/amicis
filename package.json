@@ -20,8 +20,6 @@
   "homepage": "https://github.com/SiAshbery/amicis#readme",
   "dependencies": {
     "@slack/bolt": "^2.2.3",
-    "@slack/events-api": "^2.3.3",
-    "@slack/interactive-messages": "^1.7.0",
     "@slack/web-api": "^5.10.0",
     "dotenv": "^8.2.0",
     "node-cron": "^2.0.3"
