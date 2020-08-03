@@ -251,37 +251,37 @@ const port = process.env.PORT || 3000;
   console.log(`Listening for events on ${port}`);
   await fetchAssignedChannelID();
 
-  // scheduleSignupMessage(
-  //   `It's that time again <!channel>, If you want to take part in the next set of pairings, please hit the :${assignedEmoji}: button!`,
-  //   signupTime
-  // );
-
-  // scheduleReminderMessage(
-  //   `Last chance to signup for this week's pairings <!channel>. Hit the :${assignedEmoji}: button on my above post to take part!`,
-  //   reminderTime
-  // );
-
-  // schedulePairingMessage(`Here are this weeks pairings:`, pairingTime);
-
-  // for testing purposes only:
   scheduleSignupMessage(
     `It's that time again <!channel>, If you want to take part in the next set of pairings, please hit the :${assignedEmoji}: button!`,
-    `${fillRange(0, 59)
-      .filter((number) => !(number % 2))
-      .join(",")} * * * *`
+    signupTime
   );
 
   scheduleReminderMessage(
     `Last chance to signup for this week's pairings <!channel>. Hit the :${assignedEmoji}: button on my above post to take part!`,
-    `${fillRange(0, 59)
-      .filter((number) => number % 2)
-      .join(",")} * * * *`
+    reminderTime
   );
 
-  schedulePairingMessage(
-    `Here are this weeks pairings:`,
-    `${fillRange(0, 59)
-      .filter((number) => number % 2)
-      .join(",")} * * * *`
-  );
+  schedulePairingMessage(`Here are this weeks pairings:`, pairingTime);
+
+  // for testing purposes only:
+  // scheduleSignupMessage(
+  //   `It's that time again <!channel>, If you want to take part in the next set of pairings, please hit the :${assignedEmoji}: button!`,
+  //   `${fillRange(0, 59)
+  //     .filter((number) => !(number % 2))
+  //     .join(",")} * * * *`
+  // );
+
+  // scheduleReminderMessage(
+  //   `Last chance to signup for this week's pairings <!channel>. Hit the :${assignedEmoji}: button on my above post to take part!`,
+  //   `${fillRange(0, 59)
+  //     .filter((number) => number % 2)
+  //     .join(",")} * * * *`
+  // );
+
+  // schedulePairingMessage(
+  //   `Here are this weeks pairings:`,
+  //   `${fillRange(0, 59)
+  //     .filter((number) => number % 2)
+  //     .join(",")} * * * *`
+  // );
 })();
