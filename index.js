@@ -1,6 +1,5 @@
 require("dotenv").config();
 const { WebClient } = require("@slack/web-api");
-const { createEventAdapter } = require("@slack/events-api");
 const { App } = require("@slack/bolt");
 const cron = require("node-cron");
 
