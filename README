@@ -1,6 +1,6 @@
 To run:
 
-```node index.js```
+`node index.js`
 
 To test events:
 
