@@ -1,6 +1,6 @@
 To run:
 
-`node index.js`
+`npm run start`
 
 To test events:
 
