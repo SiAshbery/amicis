@@ -1,9 +1,3 @@
 To run:
 
 `npm run start`
-
-To test events:
-
-Make sure the app is running (see above) and in a new console window type ```ngrok 3000``` Then add the new url to the Request URL in the Event subscriptions control panel on Slack API.
-
-It will automatically verify.
