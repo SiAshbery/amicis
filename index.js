@@ -3,7 +3,11 @@ const { WebClient } = require("@slack/web-api");
 const { App } = require("@slack/bolt");
 const cron = require("node-cron");
 
-const http = require("http");
+const express = require("express");
+const path = require("path");
+const serveStatic = require("serve-static");
+
+const expressApp = express();
 
 const app = new App({
   token: process.env.SLACK_TOKEN,
@@ -247,15 +251,10 @@ const port = process.env.PORT || 3000;
 const hostname = process.env.HOSTNAME || "0.0.0.0";
 
 (async () => {
-  const server = http.createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "text/plain");
-    res.end("I'm just a slack bot, there's nowt to see here.");
-  });
+  app.use(serveStatic(path.join(__dirname, "dist")));
 
-  server.listen(port, hostname, () => {
-    console.log(`Server running on ${port}/`);
-  });
+  app.listen(port);
+  console.log("server started " + port);
 
   await fetchAssignedChannelID();
   console.log("Aaaaaaaaand we're live");
