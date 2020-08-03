@@ -3,6 +3,8 @@ const { WebClient } = require("@slack/web-api");
 const { App } = require("@slack/bolt");
 const cron = require("node-cron");
 
+const http = require("http");
+
 const app = new App({
   token: process.env.SLACK_TOKEN,
   signingSecret: process.env.SLACK_SIGNING_SECRET,
@@ -241,7 +243,19 @@ const fillRange = (start, end) => {
     .map((item, index) => start + index);
 };
 
+const port = process.env.PORT || 3000;
+
 (async () => {
+  const server = http.createServer((req, res) => {
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "text/plain");
+    res.end("I'm just a slack bot, there's nowt to see here.");
+  });
+
+  server.listen(port, hostname, () => {
+    console.log(`Server running on ${port}/`);
+  });
+
   await fetchAssignedChannelID();
   console.log("Aaaaaaaaand we're live");
 
