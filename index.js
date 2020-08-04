@@ -251,6 +251,8 @@ const port = process.env.PORT || 3000;
 const hostname = process.env.HOSTNAME || "0.0.0.0";
 
 (async () => {
+  // The app crashes if anyone tries to make a request to the hosted URL.
+  // This just prevents it from doing so by supply 404 rather than 503 to any requests.
   expressApp.use(serveStatic(path.join(__dirname, "dist")));
 
   expressApp.listen(port);
