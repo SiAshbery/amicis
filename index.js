@@ -11,7 +11,7 @@ const expressApp = express();
 const router = express.Router();
 
 expressApp.get("/finish_auth", (req, res) => {
-  req.send("All good");
+  res.send("All good");
 });
 
 const app = new App({
