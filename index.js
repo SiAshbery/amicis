@@ -2,6 +2,7 @@ require("dotenv").config();
 const { WebClient } = require("@slack/web-api");
 const { App } = require("@slack/bolt");
 const cron = require("node-cron");
+const storage = require("node-persist");
 
 const express = require("express");
 const path = require("path");
@@ -10,9 +11,14 @@ const serveStatic = require("serve-static");
 const expressApp = express();
 const router = express.Router();
 
+expressApp.get("/", (req, res) => {
+  console.log(req);
+  res.send("I'm just a bot, there's nowt to see here.");
+});
+
 expressApp.get("/finish_auth", (req, res) => {
   console.log(req);
-  res.send("All good");
+  res.send("Token requested, amicis should be with you shortly...");
 });
 
 const app = new App({
@@ -27,13 +33,9 @@ const currentTime = new Date().toTimeString();
 const assignedChannel = "make-new-friends";
 const assignedEmoji = "raised_hands";
 
-let currentPost;
-let conversationsStore = {};
-let assignedChannelId;
-
-const signupTime = "0 0 10 * * 5 *";
-const reminderTime = "0 0 9 * * 1 *";
-const pairingTime = "0 0 11 * * 1 *";
+const signupTime = "0 10 * * 5";
+const reminderTime = "0 9 * * 1";
+const pairingTime = "0 11 * * 1";
 
 const reminderText =
   "*Reminder:*\n Chat in what ever way you like and feel comfortable with, Send messages over slack, do a voice or video call\nAs time goes on repeat pairings are bound to happen, This is a feature not a bug! A repeat pairing is a chance to deepen a connection and learn more about each other :smile:\nIf you missed out on this weeks pairings it’s all good, just shout out in the channel and see if anyone fancies chatting.\nPlease also do shout out if you need any help with anything.\nHave a great week!";
@@ -103,9 +105,11 @@ const fetchAssignedChannelID = async () => {
     const result = await app.client.conversations.list({
       token: process.env.SLACK_TOKEN,
     });
-    assignedChannelId = result.channels.filter(
-      (channel) => channel.name === assignedChannel
-    )[0].id;
+    await storage.setItem(
+      "assignedChannelId",
+      result.channels.filter((channel) => channel.name === assignedChannel)[0]
+        .id
+    );
   } catch (error) {
     console.log(error);
   }
@@ -118,14 +122,19 @@ const setCurrentMessage = async () => {
   // It then filters out any posts not coming from a bot.
   // Then it selects the most up to date (i.e largest) ts which should correspond
   // To our bot's recent signup post
+  const assignedChannelId = await storage.getItem("assignedChannelId");
   try {
     const result = await app.client.conversations.history({
       token: process.env.SLACK_TOKEN,
       channel: assignedChannelId,
     });
-    currentPost = result.messages.filter(
-      (message) => message.bot_profile && message.bot_profile.name === "amicis"
-    )[0].ts;
+    await storage.setItem(
+      "currentPost",
+      result.messages.filter(
+        (message) =>
+          message.bot_profile && message.bot_profile.name === "amicis"
+      )[0].ts
+    );
   } catch (error) {
     console.log(error);
   }
@@ -168,6 +177,8 @@ scheduleSignupMessage = (message, time) => {
     // Store the posted message's timestamp for furture reference.
     await setCurrentMessage();
     // Add the signup emoji to the message as a pilot for others
+    const currentPost = await storage.getItem("currentPost");
+    const assignedChannelId = await storage.getItem("assignedChannelId");
     if (currentPost) {
       try {
         await web.reactions.add({
@@ -204,6 +215,8 @@ schedulePairingMessage = (message, time) => {
     // In the pairings (I did try to just filter them but this is less of a pain)
     // Checks for currentPost to prevent edge case where the pairings message comes
     // before the signup message
+    const currentPost = await storage.getItem("currentPost");
+    const assignedChannelId = await storage.getItem("assignedChannelId");
     if (currentPost) {
       try {
         await web.reactions.remove({
@@ -263,6 +276,8 @@ const hostname = process.env.HOSTNAME || "0.0.0.0";
 
   expressApp.listen(port);
   console.log("server started " + port);
+
+  await storage.init();
 
   await fetchAssignedChannelID();
   console.log("Aaaaaaaaand we're live");
