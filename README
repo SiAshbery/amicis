@@ -7,7 +7,7 @@ Free Heroku quirks:
 
 The app lives on Heroku but there are some slightly odd workarounds I've run into on the free tier.
 
-Within the app there is an express server that runs. It doesn't actually serve any content, it just makes sure that any requests to the app url return 404 rather than 503 and heroku will consider the app crashed otherwise and stop all processes.
+Within the app there is an express server that runs. It doesn't actually serve any content, it just makes sure that any requests to the app url return 404 rather than 503 as heroku will consider the app crashed otherwise and stop all processes.
 
 In the heroku app dashboard I have also configered the scheduler to start the process every morning at UTC; 8:30, 9:30 and 10:30.
 
