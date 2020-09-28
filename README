@@ -5,7 +5,7 @@ To run:
 
 Free Heroku quirks:
 
-The app live son Heroku but there are some slightly odd workarounds I've run into on the free tier.
+The app lives on Heroku but there are some slightly odd workarounds I've run into on the free tier.
 
 Within the app there is an express server that runs. It doesn't actually serve any content, it just makes sure that any requests to the app url return 404 rather than 503 and heroku will consider the app crashed otherwise and stop all processes.
 
